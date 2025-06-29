@@ -25,24 +25,28 @@ jobs:
 
       - name: Run duplicate removal script
         run: |
-          ci-cd-demo/scripts/remove_duplicates.py
+          python scripts/remove_duplicates.py
+
+      - name: Debug — list data folder
+        run: |
+          echo "Contents of data folder after script:"
+          ls -l data/
 
       - name: Commit processed dataset
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git add data/processed_dataset.csv || echo "No changes"
-          git commit -m "Add processed dataset" || echo "No changes"
+          git add data/processed_dataset.csv || echo "Nothing to add"
+          git commit -m "Add processed dataset" || echo "Nothing to commit"
 
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: main
-          
-          - name: List files in data folder
-  run: |
-    ls -l data/
+
+
+
 
 
 
